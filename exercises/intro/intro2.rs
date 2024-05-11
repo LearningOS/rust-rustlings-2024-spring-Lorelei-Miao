@@ -8,6 +8,6 @@
 
 
 fn main() {
-    let world ="world";
+    let  world ="world";
     println!("Hello {world}!");
 }
