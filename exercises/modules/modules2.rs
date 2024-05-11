@@ -1,34 +1,42 @@
-// modules2.rs
+// options1.rs
 //
-// You can bring module paths into scopes and provide new names for them with
-// the 'use' and 'as' keywords. Fix these 'use' statements to make the code
-// compile.
-//
-// Execute `rustlings hint modules2` or use the `hint` watch subcommand for a
+// Execute `rustlings hint options1` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+// 
 
-mod delicious_snacks {
-    // TODO: Fix these use statements
-    use self::fruits::PEAR as ???
-    use self::veggies::CUCUMBER as ???
-
-    mod fruits {
-        pub const PEAR: &'static str = "Pear";
-        pub const APPLE: &'static str = "Apple";
+// This function returns how much icecream there is left in the fridge.
+// If it's before 10PM, there's 5 pieces left. At 10PM, someone eats them
+// all, so there'll be no more left :(
+    fn maybe_icecream(time_of_day: u16) -> Option<u16> {
+        if time_of_day >= 0 && time_of_day <= 23 {
+            if time_of_day >= 10 && time_of_day <= 22 {
+                Some(5)
+            } else {
+                Some(0)
+            }
+        } else {
+            None
+        }
     }
-
-    mod veggies {
-        pub const CUCUMBER: &'static str = "Cucumber";
-        pub const CARROT: &'static str = "Carrot";
+    
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+    
+        #[test]
+        fn check_icecream() {
+            assert_eq!(maybe_icecream(9), Some(0));
+            assert_eq!(maybe_icecream(10), Some(5));
+            assert_eq!(maybe_icecream(23), Some(0));
+            assert_eq!(maybe_icecream(22), Some(5));
+            assert_eq!(maybe_icecream(25), None);
+        }
+    
+        #[test]
+        fn raw_value() {
+            let icecreams = maybe_icecream(12);
+            assert_eq!(icecreams.unwrap(), 5);
+        }
     }
-}
-
-fn main() {
-    println!(
-        "favorite snacks: {} and {}",
-        delicious_snacks::fruit,
-        delicious_snacks::veggie
-    );
-}
+    
